@@ -72,7 +72,7 @@
       >
         <h1>Login</h1>
         <input type="text" placeholder="Username" id="username" required />
-        <input type="password" placeholder="Password" id="password" required />
+        <!-- <input type="password" placeholder="Password" id="password" required /> -->
         <input type="submit" value="login" id="submit" />
         <p id="error"></p>
         <p>Don't have an account?<strong> Register</strong></p>
@@ -81,18 +81,20 @@
 
     <script>
       function checkuser() {
-        const users = ["amir", "amir1", "amir2"];
-        const passwords = [0, 1, 2];
-        console.log(passwords);
-
         const username = document.getElementById("username").value;
-        const password = document.getElementById("password").value;
-        if ((username != users, password != passwords)) {
-          const error = (document.getElementById("error").innerHTML =
-            "user or pass is incrocct");
-          console.log("user name not found");
-          return false;
+        // const password = document.getElementById("password").value;
+        const users = ["amir", "amir1", "amir2"];
+        // const passwords = [0, 1, 2];
+
+        for (var i = 0; i < users.length; i++) {
+          if (username != users[i]) {
+            const error = (document.getElementById("error").innerHTML =
+              "user or pass is incrocct");
+            console.log("user name not found");
+          }
+          console.log(users[i]);
         }
+        return false;
       }
     </script>
   </body>
