@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>برنامه‌ریز شخصی</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        @import url('https://cdn.jsdelivr.net/npm/vazirmatn@33.0.0/Vazirmatn-font-face.css');
+
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            direction: rtl;
+            text-align: right;
+            background-color: #f0f2f5;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 2rem auto;
+            padding: 1.5rem;
+            background-color: #ffffff;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        .input-group {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            background-color: #4f46e5;
+            color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background-color: #4338ca;
+        }
+
+        .btn-secondary {
+            background-color: #e5e7eb;
+            color: #4b5563;
+        }
+
+        .btn-secondary:hover {
+            background-color: #d1d5db;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 1rem;
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .tab-btn-active {
+            background-color: #4f46e5;
+            color: #ffffff;
+        }
+
+        .tab-btn-inactive {
+            background-color: #f9fafb;
+            color: #6b7280;
+        }
+
+        .chart-container {
+            height: 300px;
+            width: 100%;
+            background-color: #f9fafb;
+            border-radius: 1rem;
+            padding: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f0f2f5;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #a3a3a3;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #737373;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .table-container table {
+            min-width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table-container th,
+        .table-container td {
+            padding: 0.75rem;
+            text-align: center;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .table-container th {
+            background-color: #f3f4f6;
+            font-weight: 600;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .message-box {
+            position: fixed;
+            top: 1.5rem;
+            right: 1.5rem;
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            font-weight: 500;
+            color: #ffffff;
+            transition: opacity 0.3s ease;
+            z-index: 1000;
+        }
+
+        .bg-success {
+            background-color: #10b981;
+        }
+
+        .bg-error {
+            background-color: #ef4444;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+    <!-- Default Statcounter code for tracker https://tracker-mu-cyan.vercel.app/
+-->
+    <script type="text/javascript">
+        var sc_project = 13164786;
+        var sc_invisible = 1;
+        var sc_security = "656d6570"; 
+    </script>
+    <script type="text/javascript" src="https://www.statcounter.com/counter/counter.js" async></script>
+    <noscript>
+        <div class="statcounter"><a title="Web Analytics" href="https://statcounter.com/" target="_blank"><img
+                    class="statcounter" src="https://c.statcounter.com/13164786/0/656d6570/1/" alt="Web Analytics"
+                    referrerPolicy="no-referrer-when-downgrade"></a></div>
+    </noscript>
+    <!-- End of Statcounter Code -->
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">برنامه‌ریز شخصی</h1>
+
+        <div class="flex border-b border-gray-200 mb-6 rounded-t-xl overflow-hidden">
+            <button id="add-tab-btn" class="tab-btn tab-btn-active rounded-tl-xl">افزودن</button>
+            <button id="view-tab-btn" class="tab-btn tab-btn-inactive rounded-tr-xl">نمایش</button>
+        </div>
+
+        <div id="add-tab" class="space-y-4">
+            <div class="input-group">
+                <input type="date" id="date-input" class="input-field">
+            </div>
+            <div class="input-group">
+                <input type="time" id="sleep-time-input" class="input-field" placeholder="ساعت خواب">
+                <input type="time" id="wake-up-time-input" class="input-field" placeholder="ساعت بیداری">
+            </div>
+            <div class="input-group">
+                <input type="number" id="tests-input" class="input-field" placeholder="تعداد تست">
+                <input type="number" id="water-input" class="input-field" placeholder="آب (لیتر)">
+            </div>
+            <div class="input-group">
+                <input type="text" id="food-input" class="input-field" placeholder="غذا">
+            </div>
+            <button id="add-entry-btn" class="w-full btn btn-primary">ثبت</button>
+        </div>
+
+        <div id="view-tab" class="space-y-6 hidden">
+            <div class="flex justify-center gap-2">
+                <button id="chart-sleep-btn" class="btn btn-secondary">خواب</button>
+                <button id="chart-tests-btn" class="btn btn-secondary">تست</button>
+                <button id="chart-water-btn" class="btn btn-secondary">آب</button>
+            </div>
+            <div class="flex justify-center gap-2">
+                <button id="period-daily-btn" class="btn btn-primary">روزانه</button>
+                <button id="period-weekly-btn" class="btn btn-secondary">هفتگی</button>
+                <button id="period-monthly-btn" class="btn btn-secondary">ماهانه</button>
+            </div>
+            <div class="chart-container">
+                <canvas id="chart-canvas"></canvas>
+            </div>
+            <div id="avg-box" class="text-center text-gray-600 font-semibold text-lg"></div>
+            <div class="table-container">
+                <h3 class="font-bold text-xl mb-2 text-gray-700 p-4">جدول داده‌ها</h3>
+                <table class="w-full text-sm">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th>تاریخ</th>
+                            <th>ساعت خوابیدن</th>
+                            <th>مدت خواب</th>
+                            <th>تست</th>
+                            <th>آب</th>
+                            <th>غذا</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="data-table-body"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="message" class="message-box hidden"></div>
+
+    <script>
+        const supabaseUrl = "https://lcrnswqkscmwbrdartic.supabase.co";
+        const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxjcm5zd3Frc2Ntd2JyZGFydGljIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY5Nzg2ODYsImV4cCI6MjA3MjU1NDY4Nn0.BBLDWRPayMTLCnKOpFxOFN5EpU6Hx2uK5MO5FQyTN_Y";
+        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+        let allEntries = [],
+            activeChart = "sleep",
+            timePeriod = "daily",
+            chartInstance = null;
+
+        // --- Utils ---
+        const msg = (t, e = false) => {
+            const m = document.getElementById("message");
+            m.textContent = t;
+            m.className = `message-box ${e ? "bg-error" : "bg-success"} animate-pulse`;
+            m.classList.remove("hidden");
+            setTimeout(() => m.classList.add("hidden"), 2500);
+        };
+
+        const calcSleep = (s, w, d) => {
+            if (!s || !w) return 0;
+            let [sh, sm] = s.split(":").map(Number);
+            let [wh, wm] = w.split(":").map(Number);
+            let sd = new Date(d);
+            sd.setHours(sh, sm);
+            let wd = new Date(d);
+            wd.setHours(wh, wm);
+            if (wd <= sd) wd.setDate(wd.getDate() + 1);
+            return ((wd - sd) / 36e5).toFixed(1);
+        };
+
+        const setActiveTab = (tab) => {
+            document.getElementById("add-tab").classList.add("hidden");
+            document.getElementById("view-tab").classList.add("hidden");
+            document.getElementById(`${tab}-tab`).classList.remove("hidden");
+            document.getElementById("add-tab-btn").classList.remove("tab-btn-active");
+            document.getElementById("add-tab-btn").classList.add("tab-btn-inactive");
+            document.getElementById("view-tab-btn").classList.remove("tab-btn-active");
+            document.getElementById("view-tab-btn").classList.add("tab-btn-inactive");
+            document.getElementById(`${tab}-tab-btn`).classList.add("tab-btn-active");
+            document.getElementById(`${tab}-tab-btn`).classList.remove("tab-btn-inactive");
+        };
+
+        const setActiveChartBtn = (chart) => {
+            document.querySelectorAll("#view-tab button").forEach((btn) => {
+                if (btn.id.startsWith("chart-")) {
+                    btn.classList.remove("btn-primary");
+                    btn.classList.add("btn-secondary");
+                }
+            });
+            document.getElementById(`chart-${chart}-btn`).classList.remove("btn-secondary");
+            document.getElementById(`chart-${chart}-btn`).classList.add("btn-primary");
+            activeChart = chart;
+            renderChart();
+        };
+
+        const setTimePeriodBtn = (period) => {
+            document.querySelectorAll("#view-tab button").forEach((btn) => {
+                if (btn.id.startsWith("period-")) {
+                    btn.classList.remove("btn-primary");
+                    btn.classList.add("btn-secondary");
+                }
+            });
+            document.getElementById(`period-${period}-btn`).classList.remove("btn-secondary");
+            document.getElementById(`period-${period}-btn`).classList.add("btn-primary");
+            timePeriod = period;
+            renderChart();
+        };
+
+        // --- Fetch & Render ---
+        async function fetchData() {
+            let {
+                data,
+                error
+            } = await supabase.from("daily_tracker_entries").select("*").order("date", {
+                ascending: true
+            });
+            if (error) {
+                msg("خطا در دریافت", true);
+                return
+            }
+            allEntries = data;
+            render();
+        }
+
+        function aggregate(period) {
+            let agg = {};
+            allEntries.forEach(e => {
+                let d = new Date(e.date),
+                    k = e.date;
+                if (period === "weekly") k = ["یک", "دو", "سه", "چهار", "پنج", "جمعه", "شنبه"][d.getDay()];
+                if (period === "monthly") k = "هفته " + Math.ceil(d.getDate() / 7);
+                agg[k] ??= {
+                    sleep: [],
+                    tests: [],
+                    water: []
+                };
+                if (e.sleep_hours != null) agg[k].sleep.push(+e.sleep_hours);
+                if (e.tests_count != null) agg[k].tests.push(+e.tests_count);
+                if (e.water_intake_liters != null) agg[k].water.push(+e.water_intake_liters);
+            });
+            let labels = Object.keys(agg);
+            return {
+                labels,
+                sleep: labels.map(k => avg(agg[k].sleep)),
+                tests: labels.map(k => sum(agg[k].tests)),
+                water: labels.map(k => sum(agg[k].water))
+            }
+        }
+        const avg = a => a.length ? (a.reduce((s, v) => s + v, 0) / a.length).toFixed(1) : 0;
+        const sum = a => a.reduce((s, v) => s + v, 0);
+
+        function renderChart() {
+            const ag = aggregate(timePeriod),
+                map = {
+                    sleep: "ساعت خواب",
+                    tests: "تعداد تست",
+                    water: "آب (لیتر)"
+                };
+            if (chartInstance) chartInstance.destroy();
+            chartInstance = new Chart(document.getElementById("chart-canvas"), {
+                type: "line",
+                data: {
+                    labels: ag.labels,
+                    datasets: [{
+                        label: map[activeChart],
+                        data: ag[activeChart],
+                        borderColor: "rgb(79, 70, 229)",
+                        backgroundColor: "rgba(79, 70, 229, 0.2)",
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: {
+                        mode: "index",
+                        intersect: false
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                font: {
+                                    family: 'Vazirmatn'
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            document.getElementById("avg-box").textContent = `میانگین ${map[activeChart]}: ${avg(ag[activeChart])}`;
+        }
+
+        function renderTable() {
+            let tb = document.getElementById("data-table-body");
+            tb.innerHTML = "";
+            allEntries.forEach(e => {
+                let tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td class="py-2 px-4">${new Date(e.date).toLocaleDateString("fa-IR")}</td>
+                    <td class="py-2 px-4">${e.sleep_time || "-"}</td>
+                    <td class="py-2 px-4">${e.sleep_hours || "-"}</td>
+                    <td class="py-2 px-4">${e.tests_count || "-"}</td>
+                    <td class="py-2 px-4">${e.water_intake_liters || "-"}</td>
+                    <td class="py-2 px-4">${e.food || "-"}</td>
+                    <td class="py-2 px-4"><button onclick="del('${e.date}')" class="text-red-500 hover:text-red-700 transition-colors duration-200">❌</button></td>
+                `;
+                tb.appendChild(tr);
+            });
+        }
+
+        function render() {
+            renderChart();
+            renderTable();
+        }
+
+        // --- Actions ---
+        async function addEntry() {
+            let d = document.getElementById("date-input").value;
+            let s = document.getElementById("sleep-time-input").value;
+            let w = document.getElementById("wake-up-time-input").value;
+            let t = document.getElementById("tests-input").value;
+            let wa = document.getElementById("water-input").value;
+            let f = document.getElementById("food-input").value;
+
+            if (!d) {
+                msg("لطفا تاریخ را وارد کنید.", true);
+                return;
+            }
+
+            let {
+                data: dup
+            } = await supabase.from("daily_tracker_entries").select("date").eq("date", d);
+            if (dup && dup.length) {
+                msg("تاریخ تکراری", true);
+                return;
+            }
+
+            let e = {
+                date: d,
+                sleep_hours: calcSleep(s, w, d),
+                sleep_time: s || null,
+                wake_up_time: w || null,
+                tests_count: t ? +t : 0,
+                water_intake_liters: wa ? +wa : 0,
+                food: f,
+                timestamp: new Date().toISOString()
+            };
+
+            let {
+                error
+            } = await supabase.from("daily_tracker_entries").insert(e);
+            if (error) msg("خطا", true);
+            else {
+                msg("ثبت شد");
+                document.getElementById("sleep-time-input").value = "";
+                document.getElementById("wake-up-time-input").value = "";
+                document.getElementById("tests-input").value = "";
+                document.getElementById("water-input").value = "";
+                document.getElementById("food-input").value = "";
+            }
+        }
+
+        async function del(date) {
+            let { error } = await supabase.from("daily_tracker_entries").delete().eq("date", date);
+            if (error) {
+                msg("خطا در حذف: دسترسی ندارید.", true);
+                console.error("خطا در حذف رکورد:", error);
+            } else {
+                msg("حذف شد");
+            }
+        }
+
+        // --- Events ---
+        document.getElementById("add-tab-btn").onclick = () => setActiveTab("add");
+        document.getElementById("view-tab-btn").onclick = () => {
+            setActiveTab("view");
+            render();
+        };
+        document.getElementById("add-entry-btn").onclick = addEntry;
+        ["sleep", "tests", "water"].forEach(c => document.getElementById(`chart-${c}-btn`).onclick = () => setActiveChartBtn(c));
+        ["daily", "weekly", "monthly"].forEach(p => document.getElementById(`period-${p}-btn`).onclick = () => setTimePeriodBtn(p));
+
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchData();
+            supabase.channel("changes").on("postgres_changes", {
+                event: "*",
+                schema: "public",
+                table: "daily_tracker_entries"
+            }, fetchData).subscribe();
+        });
+    </script>
+</body>
+
+</html>
