@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    body {
+      background-color: violet;
+      display: flex;
+      justify-content: center;
+      font-family: "vazir";
+      background: url(https://static.vecteezy.com/system/resources/thumbnails/048/761/518/small/a-magical-pathway-lined-with-blooming-cherry-blossom-trees-their-pink-petals-covering-the-ground-creating-a-dreamy-atmosphere-photo.jpeg);
+      background-repeat: no-repeat;
+      background-size: cover;
+      color: white;
+    }
+    h1 {
+      color: white;
+    }
+    .login-box {
+      backdrop-filter: blur(2px);
+      border: 0.5px rgba(255, 255, 255, 0.399) solid;
+      width: 300px;
+      height: 400px;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .login-box input {
+      color: white;
+      background-color: rgba(255, 255, 255, 0);
+      backdrop-filter: blur(2px);
+      border: 0.5px rgba(255, 255, 255, 0.399) solid;
+      border-radius: 20px;
+      width: 200px;
+      padding: 10px;
+      margin-bottom: 15px;
+    }
+    input::placeholder {
+      color: white;
+    }
+
+    #submit {
+      border-radius: 30px;
+      width: 216px;
+      padding: 8px;
+      font-family: "vazir";
+      cursor: pointer;
+      transition: 0.2s;
+      background-color: rgba(255, 255, 255, 0.346);
+    }
+    #submit:hover {
+      scale: 1.1;
+    }
+    #error {
+      color: red;
+      margin-top: 0;
+      font-family: monospace;
+    }
+  </style>
+  <body>
+    <div>
+      <form
+        class="login-box"
+        action="index.html"
+        method="post"
+        onsubmit="return checkuser()"
+      >
+        <h1>Login</h1>
+        <input type="text" placeholder="Username" id="username" required />
+        <input type="password" placeholder="Password" id="password" required />
+        <input type="submit" value="login" id="submit" />
+        <p id="error"></p>
+        <p>Don't have an account?<strong> Register</strong></p>
+      </form>
+    </div>
+
+    <script>
+      function checkuser() {
+        const users = ["amir", "amir1", "amir2"];
+        const passwords = [0, 1, 2];
+        console.log(passwords);
+
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+        if ((username != users, password != passwords)) {
+          const error = (document.getElementById("error").innerHTML =
+            "user or pass is incrocct");
+          console.log("user name not found");
+          return false;
+        }
+      }
+    </script>
+  </body>
+</html>
