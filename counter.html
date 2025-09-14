@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -22,3 +23,29 @@
     </script>
   </body>
 </html>
+=======
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1 id="number">0</h1>
+    <input type="button" value="+" onclick="up()" />
+    <input type="button" value="-" onclick="down()" />
+    <script>
+      let num = 0;
+      function up() {
+        const number = (document.getElementById("number").innerHTML = num);
+        num++;
+      }
+      function down() {
+        const number = (document.getElementById("number").innerHTML = num);
+        num--;
+      }
+    </script>
+  </body>
+</html>
+>>>>>>> c921698f7efd305244900350ebb1541df384ecc8
