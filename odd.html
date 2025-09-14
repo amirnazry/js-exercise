@@ -7,12 +7,20 @@
   </head>
   <body></body>
   <script>
-    const num = 2;
-    const result = num % 2;
-    if (result == 0) {
-      console.log(num + " is zoj");
-    } else {
-      console.log(num + " is fard");
+    // const num = 2;
+    // const result = num % 2;
+    // if (result == 0) {
+    //   console.log(num + " is zoj");
+    // } else {
+    //   console.log(num + " is fard");
+    // }
+    const numbers = [23, 7, 45, 12];
+    for (var i = 0; i <= numbers.length; i++) {
+      var max = numbers[0];
+      if (numbers[i] <= max) {
+        var max = numbers[i++];
+        console.log(numbers[i]);
+      }
     }
   </script>
 </html>
