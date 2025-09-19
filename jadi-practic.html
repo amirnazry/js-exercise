@@ -7,16 +7,16 @@
   </head>
   <body>
     <script>
-      const strings =
-        "Whiskey Hotel Four Tango Dash Alpha Romeo Three Dash Yankee Oscar Uniform Dash Sierra One November Kilo India November Golf Dash Four Bravo Zero Uniform Seven";
-      let numbers = ([one, four] = [1, 4]);
-      for (let i = 0; i < strings.length; i++) {
-        console.log(strings[i]);
+      // const strings =
+      //   "Whiskey Hotel Four Tango Dash Alpha Romeo Three Dash Yankee Oscar Uniform Dash Sierra One November Kilo India November Golf Dash Four Bravo Zero Uniform Seven";
+      // let numbers = ([one, four] = [1, 4]);
+      // for (let i = 0; i < strings.length; i++) {
+      //   console.log(strings[i]);
 
-        if (strings[i] == numbers[i]) {
-          console.log(numbers[i]);
-        }
-      }
+      //   if (strings[i] == numbers[i]) {
+      //     console.log(numbers[i]);
+      //   }
+      // }
 
       // var strings = strings.split(" ");
       // for (let i = 0; i < strings.length; i++) {
@@ -25,14 +25,14 @@
       // }
 
       // ===========================
-      // for (let i = 111; i <= 999; i++) {
-      //   console.log(i);
-      //   function numberdigit() {
-      //     let lastnum = i % 10;
-      //     console.log(lastnum);
-      //   }
-      // }
-      // numberdigit();
+      for (let i = 111; i <= 564; i++) {
+        console.log(i);
+        for (let j = 1; j <= 3; j++) {
+          let lastnum = i % 10;
+          let i = i / 10;
+          console.log("lastnum " + lastnum);
+        }
+      }
     </script>
   </body>
 </html>

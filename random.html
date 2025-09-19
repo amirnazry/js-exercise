@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      //   const randomNumber = Math.floor(Math.random() * 11);
+      //   const userNum = prompt("Enter your fisrt number: ");
+      //   for (let i = 0; i <= 10; i++) {
+      //     if (userNum < randomNumber) {
+      //       alert("عدد شما کوچکتر است");
+      //     } else if (userNum > randomNumber) {
+      //       alert("عدد شما بزرگتر است");
+      //     } else {
+      //       alert("بردید");
+      //     }
+      //   }
+      //   var numbers = [1, 2, 3, 4, 5, 6, 8, 7];
+      //   console.log(number);
+      //   for (var number of numbers) {
+      //     // console.log(number);
+      //     let odd = number % 2 == 0;
+      //     if (odd) {
+      //       console.log(number);
+      //     }
+      //   }
+
+      const numbers = [22, 3, 55, 100, 125, 50, 200];
+      console.log(numbers);
+      function bignum() {
+        var x = 0;
+        for (var number of numbers) {
+          if (number > x) {
+            var x = number;
+          }
+        }
+        console.log(x);
+      }
+      bignum();
+    </script>
+  </body>
+</html>
