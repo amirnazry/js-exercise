@@ -1,0 +1,36 @@
+.righteyeafter {
+  width: 25px;
+  left: 170px;
+  position: absolute;
+  top: 85px;
+}
+.lefteyeafter {
+  width: 25px;
+  left: 105px;
+  position: absolute;
+  top: 85px;
+}
+.righteyeup {
+  width: 25px;
+  left: 174px;
+  position: absolute;
+  top: 60px;
+}
+.lefteyetype {
+  width: 40px;
+  left: 110px;
+  position: absolute;
+  top: 60px;
+}
+.righteyetype {
+  width: 25px;
+  left: 174px;
+  position: absolute;
+  top: 60px;
+}
+.lefteyeup {
+  width: 25px;
+  left: 110px;
+  position: absolute;
+  top: 60px;
+}
