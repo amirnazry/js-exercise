@@ -1,48 +1,23 @@
+const addItembtn = document.querySelector("button")
+const itemList = document.getElementById("item-list")
+const remove = document.getElementById('text-danger')
+console.log(remove);
 
-// const userInput = document.getElementById("userInput").addEventListener('focusin',()=>{
-//     righteye.className = 'righteyeafter'
-//     lefteye.className = 'lefteyeafter'
-// })
-// const userout = document.getElementById("userInput").addEventListener('focusout',()=>{
-//     righteye.className = 'righteye'
-//     lefteye.className = 'lefteye'
-// })
-// const type = document.getElementById("userInput").addEventListener('input',()=>{
-//     righteye.style.left = '+1px'
-//     lefteye.style.left = '111px'
-// })
-// const passInput = document.getElementById("passInput").addEventListener('focus',()=>{
-//     righteye.className = 'righteyeup'
-//     lefteye.className = 'lefteyeup'
-// })
+addItembtn.addEventListener("click", 
+    function addItem(){
+        const itemInput = document.getElementById("item-input").value
+        localStorage.setItem('name' , itemInput)
+        console.log(itemInput);
+        event.preventDefault()
 
-const userInput = document.getElementById('userInput')
-const passInput = document.getElementById('passInput')
-
-userInput.addEventListener('focus',() => {
-    righteye.className = 'righteyeafter'
-    lefteye.className = 'lefteyeafter'
-})
-userInput.addEventListener('blur',() => {
-    righteye.className = 'righteye'
-    lefteye.className = 'lefteye'
+        const item = localStorage.getItem('name')
+        itemList.innerHTML += ` 
+            <li class="list-item">
+              ${item}
+              <i class="bi bi-x fs-5 text-danger" id="remove"></i>
+            </li>`
 })
 
-
-passInput.addEventListener('focus', ()=>{
-    righteye.className = 'righteyeup'
-    lefteye.className = 'lefteyeup'
-})
-passInput.addEventListener('blur',() => {
-    righteye.className = 'righteye'
-    lefteye.className = 'lefteye'
-})
-
-
-// userInput.addEventListener('keydown', ()=>{
-//     var righteyenum = 75
-//     // var righteyenum =+ righteyenum+  1
-//     righteye.style.top = `${righteyenum}px`
-//     // console.log(righteyenum);
-//     righteyenum++
+// remove.addEventListener('click', function remove(){
+//     localStorage.removeItem('name')
 // })
